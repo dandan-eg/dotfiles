@@ -1,0 +1,100 @@
+onboarding = false
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
+
+[theme.custom]
+
+[keys]
+# Change prefix to match your tmux (Ctrl+s)
+prefix = "ctrl+s"
+
+# Pane navigation - match your tmux bindings (h, j, k, l)
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# Reload config (similar to your tmux r binding)
+reload_config = "prefix+r"
+
+# Split panes - match tmux defaults but with your prefix
+split_vertical = "prefix+%"
+split_horizontal = "prefix+\""
+
+# Move panes - match your tmux bindings
+swap_pane_left = "prefix+{"
+swap_pane_right = "prefix+}"
+
+# New tab
+new_tab = "prefix+c"
+
+# Detach
+detach = "prefix+d"
+
+# Close pane
+close_pane = "prefix+x"
+
+# Zoom pane (fullscreen)
+zoom = "prefix+z"
+
+# Cycle through panes
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+
+# Tab management
+# previous_tab = "prefix+p"
+# next_tab = "prefix+n"
+switch_tab = "prefix+1..9"
+focus_agent = "prefix+alt+1..9"
+
+# Workspace management
+workspace_picker = "prefix+w"
+new_workspace = "prefix+*"
+rename_workspace = "prefix+$"
+rename_tab = "prefix+,"
+
+# Help
+help = "prefix+?"
+
+# Custom commands
+[[keys.command]]
+key = "prefix+!"
+type = "shell"
+command = "bash ~/.config/herdr/scripts/break_pane.sh"
+
+[[keys.command]]
+key = "prefix+f"
+type = "shell"
+command = "bash ~/.config/herdr/scripts/join_pane.sh"
+
+[ui]
+# Enable mouse (Herdr default, but explicit)
+mouse_capture = true
+copy_on_select = true
+
+# Sidebar behavior
+sidebar_start_collapsed = true
+pane_borders = true
+pane_gaps = false
+
+# Terminal settings
+show_agent_labels_on_pane_borders = true
+[terminal]
+default_shell = ""
+shell_mode = "auto"
+new_cwd = "follow"
+
+# Agent detection for OpenCode
+[session]
+resume_agents_on_restore = true
+
+[ui.toast]
+delivery = "herdr"
+
+[ui.sound]
+enabled = true
+
+[experimental]
+pane_history = false

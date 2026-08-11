@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DOTFILES="$HOME/dev/dotfiles"
+
+
+copy() {
+	APP = $1
+}
+
+rm -rf ~/.config/nvim
+ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
+
+rm -rf ~/.config/herdr/
+ln -s "$DOTFILES/herdr" "$HOME/.config/herdr"

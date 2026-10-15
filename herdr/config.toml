@@ -7,7 +7,6 @@ auto_switch = false
 [theme.custom]
 
 [keys]
-# Change prefix to match your tmux (Ctrl+s)
 prefix = "ctrl+s"
 
 # Pane navigation - match your tmux bindings (h, j, k, l)
@@ -17,7 +16,7 @@ focus_pane_up = "prefix+k"
 focus_pane_right = "prefix+l"
 
 # Reload config (similar to your tmux r binding)
-reload_config = "prefix+r"
+reload_config = "prefix+R"
 
 # Split panes - match tmux defaults but with your prefix
 split_vertical = "prefix+%"
@@ -69,6 +68,12 @@ key = "prefix+f"
 type = "shell"
 command = "bash ~/.config/herdr/scripts/join_pane.sh"
 
+[[keys.command]]
+key = "prefix+q"
+type = "plugin_action"
+command = "rmarganti.herdr-pluck.pluck"
+description = "pluck visible token"
+
 [ui]
 # Enable mouse (Herdr default, but explicit)
 mouse_capture = true
@@ -77,14 +82,13 @@ copy_on_select = true
 # Sidebar behavior
 sidebar_start_collapsed = true
 pane_borders = true
-pane_gaps = false
+pane_gaps = true
 
 # Terminal settings
 show_agent_labels_on_pane_borders = true
 [terminal]
 default_shell = ""
 shell_mode = "auto"
-new_cwd = "follow"
 
 # Agent detection for OpenCode
 [session]

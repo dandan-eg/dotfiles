@@ -3,6 +3,7 @@
 
 # Except
 !config.toml
+!plugins.json
 !scripts/
 !scripts/**
 !.gitignore

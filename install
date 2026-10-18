@@ -2,13 +2,10 @@
 
 DOTFILES="$HOME/dev/dotfiles"
 
+mkdir -p "$HOME/.config"
 
-copy() {
-	APP = $1
-}
-
-rm -rf ~/.config/nvim
+rm -rf "$HOME/.config/nvim"
 ln -s "$DOTFILES/nvim" "$HOME/.config/nvim"
 
-rm -rf ~/.config/herdr/
+rm -rf "$HOME/.config/herdr"
 ln -s "$DOTFILES/herdr" "$HOME/.config/herdr"

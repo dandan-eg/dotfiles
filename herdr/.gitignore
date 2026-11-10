@@ -7,3 +7,4 @@
 !scripts/
 !scripts/**
 !.gitignore
+!herdr-plugin-installer.sh

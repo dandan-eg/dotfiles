@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CWD=$(zoxide query $1)
+
+WORKSPACE_CREATION_RESULT=$(herdr workspace create --cwd $CWD)
+WORKSPACE_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.workspace.workspace_id")
+
+NVIM_TAB_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.tab.tab_id")
+NVIM_PANE_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.root_pane.pane_id")
+
+AGENT_TAB_CREATION=$(herdr tab create --workspace $WORKSPACE_ID --label 'agent')
+AGENT_PANE_ID=$(echo $AGENT_TAB_CREATION | jq -r ".result.root_pane.pane_id")
+
+herdr tab rename     $NVIM_TAB_ID nvim
+herdr pane send-text $NVIM_PANE_ID nvim
+herdr pane send-keys $NVIM_PANE_ID enter
+
+herdr pane send-text $AGENT_PANE_ID opencode
+herdr pane send-keys $AGENT_PANE_ID enter
+
+herdr pane close $HERDR_PANE_ID

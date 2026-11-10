@@ -6,17 +6,28 @@ CWD=$(zoxide query $1)
 WORKSPACE_CREATION_RESULT=$(herdr workspace create --cwd $CWD)
 WORKSPACE_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.workspace.workspace_id")
 
-NVIM_TAB_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.tab.tab_id")
-NVIM_PANE_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.root_pane.pane_id")
+DEFAULT_TAB_ID=$(echo $WORKSPACE_CREATION_RESULT | jq -r ".result.tab.tab_id")
 
-AGENT_TAB_CREATION=$(herdr tab create --workspace $WORKSPACE_ID --label 'agent')
-AGENT_PANE_ID=$(echo $AGENT_TAB_CREATION | jq -r ".result.root_pane.pane_id")
+cd templates
 
-herdr tab rename     $NVIM_TAB_ID nvim
-herdr pane send-text $NVIM_PANE_ID nvim
-herdr pane send-keys $NVIM_PANE_ID enter
+TEMPLATE_FILE=$(fzf)
 
-herdr pane send-text $AGENT_PANE_ID opencode
-herdr pane send-keys $AGENT_PANE_ID enter
+while IFS=$'\t' read -r name cmd; do
+    pane_id=$(
+        herdr tab create \
+            --label "$name" \
+            --workspace "$WORKSPACE_ID" |
+        jq -r '.result.root_pane.pane_id'
+    )
 
+    if [[ -n "$cmd" ]]; then
+        herdr pane send-text "$pane_id" "$cmd"
+        herdr pane send-keys "$pane_id" enter
+    fi
+done < <(
+    jq -r '.[] | [.name, (.cmd // "")] | @tsv' "$TEMPLATE_FILE"
+)
+
+herdr tab close $DEFAULT_TAB_ID
+herdr workspace focus $WORKSPACE_ID
 herdr pane close $HERDR_PANE_ID
